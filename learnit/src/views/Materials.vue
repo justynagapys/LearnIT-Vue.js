@@ -1,6 +1,6 @@
 <template>
-    <div class="home">
-        <p>Strona główna</p>
+    <div class="materials">
+        <p>Materiały</p>
     </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style scoped>
-    .home{
+    .materials{
         display: flex;
         justify-content: center;
         align-items: center;
