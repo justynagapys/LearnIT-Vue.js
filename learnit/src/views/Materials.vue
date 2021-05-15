@@ -1,15 +1,17 @@
 <template>
      <div class="materials">
-        <md-table v-model="materials" md-sort="name" md-sort-order="asc" md-card @md-selected="onSelect">
          <md-table-toolbar>
             <h1 class="md-title">Materiały</h1>
         </md-table-toolbar>
+        <md-table v-model="materials" md-sort="id" md-sort-order="asc" md-card @md-selected="onSelect" class="mdTable">
         <md-table-row slot="md-table-row" slot-scope="{ item }" :class="getClass(item)" md-selectable="single">
-            <md-table-cell md-label="Nazwa" md-sort-by="title" class="tableRow">{{ item.title }}</md-table-cell>
-            <md-table-cell md-label="Kategoria" md-sort-by="category" class="tableRow">{{ item.category }}</md-table-cell>
-            <md-table-cell md-label="Słowa klucze" md-sort-by="keyWords" class="tableRow">{{ item.keyWords }}</md-table-cell>
-            <md-table-cell md-label="Autor" md-sort-by="author" class="tableRow">{{ item.author | formatDate }}</md-table-cell>
-            <md-table-cell md-label="Data" md-sort-by="date" class="tableRow">{{ item.date }}</md-table-cell>
+            <md-table-cell md-label="NAZWA" md-sort-by="title" class="tableCell">{{ item.title }}</md-table-cell>
+            <md-table-cell md-label="KATEGORIA" md-sort-by="category" class="tableCell">{{ item.category }}</md-table-cell>
+            <md-table-cell md-label="SŁOWA KLUCZE" md-sort-by="keyWords" class="tableCell">{{ item.keyWords }}</md-table-cell>
+            <md-table-cell md-label="AUTOR" md-sort-by="author" class="tableCell">{{ item.author }}</md-table-cell>
+            <md-table-cell md-label="DATA" md-sort-by="date" class="tableCell">{{ item.date  | formatDate }}</md-table-cell>
+            <md-table-cell><img alt="edit" src="../assets/edit.svg" class="rowIcon"></md-table-cell>
+            <md-table-cell><img alt="trash" src="../assets/trash.svg" class="rowIcon"></md-table-cell>
       </md-table-row>
     </md-table>
     <div>
@@ -27,7 +29,7 @@ export default {
     name: 'app',
     data() {
         return {
-            selected: {},
+            selected: null,
             materials: [],
         };
     },
@@ -50,15 +52,23 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
     .materials {
         padding: 5px;
     }
-    .md-title{
+    .md-title {
         text-transform: uppercase;
         font-weight: 600;
     }
-    .tableRow{
+    .tableCell {
         text-align: left;
+        font-size:12px;
+    }
+    .rowIcon {
+        height: 25px;
+        width: 25px;
+    }
+    .materials ::selection {
+        background-color:deepskyblue;
     }
 </style>

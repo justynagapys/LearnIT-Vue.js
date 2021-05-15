@@ -56,6 +56,10 @@ export default {
         margin-top:60px;
     }
 
+    .sidebar ::selection {
+        background-color: deepskyblue;
+    }
+
     .side-btn:focus {
         outline: none;
     }

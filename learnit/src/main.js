@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
-// import moment from 'moment';
+import moment from 'moment';
 import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
@@ -18,8 +18,4 @@ new Vue({
   render: (h) => h(App),
 }).$mount('#app');
 
-// Vue.filter('formatDate', function (value) {
-//   if (value) {
-//     return moment(String(value)).format('MM/DD/YYYY hh:mm');
-//   }
-// });
+Vue.filter('formatDate', (value) => moment(String(value)).format('MM/DD/YYYY hh:mm'));
