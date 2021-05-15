@@ -40,7 +40,9 @@ export default {
     }
 
     .logo{
-        margin-top: 200px;
+        position: absolute;
+        bottom: 20px;
+        left: 45px;
     }
 
     .menu-items {
