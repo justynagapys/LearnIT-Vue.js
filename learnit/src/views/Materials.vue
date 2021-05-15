@@ -1,17 +1,18 @@
 <template>
-    <div  class="materials">
-        <div v-for="material in materials" :key="material.id">
-            <p>{{material.title}}</p>
-            <p>{{material.category}}</p>
-            <p>{{material.keyWords}}</p>
-            <p>{{material.description}}</p>
-            <p>{{material.link}}</p>
-            <p>{{material.date}}</p>
-            <p>{{material.author}}</p>
-            <p>{{material.university}}</p>
-            <p>{{material.email}}</p>
-        </div>
-    </div>
+     <div>
+        <md-table v-model="materials" md-sort="name" md-sort-order="asc" md-card>
+         <md-table-toolbar>
+            <h1 class="md-title">Materiały</h1>
+        </md-table-toolbar>
+        <md-table-row slot="md-table-row" slot-scope="{ item }">
+            <md-table-cell md-label="Nazwa" md-sort-by="title">{{ item.title }}</md-table-cell>
+            <md-table-cell md-label="Kategoria" md-sort-by="category">{{ item.category }}</md-table-cell>
+            <md-table-cell md-label="Słowa klucze" md-sort-by="keyWords">{{ item.keyWords }}</md-table-cell>
+            <md-table-cell md-label="Autor" md-sort-by="author">{{ item.author | formatDate }}</md-table-cell>
+            <md-table-cell md-label="Data" md-sort-by="date">{{ item.date }}</md-table-cell>
+      </md-table-row>
+    </md-table>
+  </div>
 </template>
 
 <script>
@@ -34,7 +35,7 @@ export default {
 
 <style scoped>
     .materials {
-        display: flex; /*coś tutaj trzeba zmienic z tym */
+        display: flex;
         justify-content: center;
         align-items: center;
         height: 100%;
