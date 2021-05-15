@@ -64,7 +64,7 @@ export default {
         position:relative;
         background-color: white;
         color: rgb(18, 55, 82);
-        font-weight: 500;
+        font-weight: 600;
         margin-left:10px;
         border-radius: 30px 0 0 30px;
     }
@@ -94,7 +94,7 @@ export default {
         padding: 16px 0px;
         cursor: pointer;
         font-size: 16px;
-        font-weight: 500;
+        font-weight: 600;
         color: white;
         background-color: transparent;
     }

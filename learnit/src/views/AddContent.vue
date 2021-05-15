@@ -1,6 +1,6 @@
 <template>
     <div class="addContent">
-        <p>Dodaj materiał</p>
+        <p>DODAJ MATERIAŁ</p>
         <p>Data dodania:{{ getTimestamp() }}</p>
         <div>
             <form v-on:submit.prevent="addContent">
