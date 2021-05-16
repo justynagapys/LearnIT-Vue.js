@@ -14,9 +14,10 @@
             <md-table-cell><img alt="trash" src="../assets/trash.svg" class="rowIcon"></md-table-cell>
       </md-table-row>
     </md-table>
-    <md-card md-with-hover v-if="selected" class="selectedMaterial">
-      <md-ripple>
+    <md-card md-with-hover v-if="selected">
+      <md-ripple  class="selectedMaterial">
         <md-card-header>
+          <a class="close" href="">&times;</a>
           <div class="md-title sTitle">{{ selected.title }} </div>
           <div class="md-subhead">
             DATA DODANIA: {{ selected.date | formatDate }}
@@ -95,9 +96,19 @@ export default {
         background-color:deepskyblue;
     }
     .selectedMaterial {
-      margin: 6px;
-      width: 80%;
-      display: inline-block;
+      margin: 10px auto;
+      padding: 10px;
+      background: #fff;
+      border-radius: 5px;
+      width: 60%;
+      position: fixed;
+      top: 45px;
+      bottom: 40px;
+      left: 280px;
+      right: 0;
+      height: auto;
+      border: rgb(18, 55, 82) solid;
+      overflow: auto;
     }
     .pHeader{
       font-size: 15px;
@@ -105,5 +116,15 @@ export default {
     }
     .sTitle{
       color: rgb(18, 55, 82);
+    }
+    .selectedMaterial .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      transition: all 200ms;
+      font-size: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #333;
     }
 </style>
