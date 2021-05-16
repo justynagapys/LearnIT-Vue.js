@@ -1,5 +1,5 @@
 <template>
-    <div class="addContent">
+    <div class="addContent container">
         <p>DODAJ MATERIAŁ</p>
         <p>Data dodania:{{ getTimestamp() }}</p>
         <div>
@@ -116,7 +116,10 @@ export default {
         height: 100%;
         width: 100%;
         font-size: 20px;
-        color: rgb(167,167,167);
         font-weight: 600;
+    }
+
+    .addContent ::selection {
+        background-color:deepskyblue;
     }
 </style>

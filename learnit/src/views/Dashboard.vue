@@ -25,6 +25,10 @@ export default {
     width: 100vw;
   }
 
+  .dashboard ::selection {
+        background-color:deepskyblue;
+    }
+
   .content{
     background-color: white;
     border-radius: 10px;

@@ -14,9 +14,15 @@
             <md-table-cell><img alt="trash" src="../assets/trash.svg" class="rowIcon"></md-table-cell>
       </md-table-row>
     </md-table>
-    <div>
-        {{ selected }}
-    </div>
+    <md-card md-with-hover v-if="selected" class="selectedMaterial">
+      <md-ripple>
+        <md-card-header>
+          <div class="md-title">Card with hover effect</div>
+          <div class="md-subhead">It also have a ripple</div>
+        </md-card-header>
+        <md-card-content>{{ selected }}</md-card-content>
+      </md-ripple>
+    </md-card>
   </div>
 </template>
 <!-- <p>{{material.description}}</p> -->
@@ -55,6 +61,7 @@ export default {
 <style scoped>
     .materials {
         padding: 5px;
+        height: 100%;
     }
     .md-title {
         text-transform: uppercase;
@@ -68,7 +75,12 @@ export default {
         height: 25px;
         width: 25px;
     }
-    .materials ::selection {
+    .materials ::selection, .materials:focus, .tableCell:focus {
         background-color:deepskyblue;
+    }
+    .selectedMaterial {
+      margin: 4px;
+      display: inline-block;
+      vertical-align: top;
     }
 </style>
