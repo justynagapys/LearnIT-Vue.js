@@ -17,18 +17,34 @@
     <md-card md-with-hover v-if="selected" class="selectedMaterial">
       <md-ripple>
         <md-card-header>
-          <div class="md-title">Card with hover effect</div>
-          <div class="md-subhead">It also have a ripple</div>
+          <div class="md-title sTitle">{{ selected.title }} </div>
+          <div class="md-subhead">
+            DATA DODANIA: {{ selected.date | formatDate }}
+          </div>
         </md-card-header>
-        <md-card-content>{{ selected }}</md-card-content>
+        <md-card-content>
+          <p class="pHeader">KATEGORIA:</p>
+          <p>{{ selected.category }}</p>
+          <p class="pHeader">SŁOWA KLUCZE: </p>
+          <p>{{ selected.keyWords }}</p>
+          <p class="pHeader">OPIS: </p>
+          <p>{{ selected.description }}</p>
+          <p class="pHeader">LINK: </p>
+          <p>{{ selected.link }}</p>
+          <p class="pHeader">AUTOR: </p>
+          <p>{{ selected.author }}</p>
+          <p class="pHeader">EMAIL: </p>
+          <p>{{ selected.email }}</p>
+          <p class="pHeader">UNIWERSYTET: </p>
+          <p>{{ selected.university }}</p>
+          </md-card-content>
       </md-ripple>
     </md-card>
   </div>
 </template>
-<!-- <p>{{material.description}}</p> -->
+<!-- <p></p> -->
 <!-- <p>{{material.link}}</p> -->
-<!-- <p>{{material.university}}</p>
-<p>{{material.email}}</p> -->
+<!-- <p>{{material.email}}</p> -->
 
 <script>
 export default {
@@ -82,5 +98,12 @@ export default {
       margin: 6px;
       width: 80%;
       display: inline-block;
+    }
+    .pHeader{
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .sTitle{
+      color: rgb(18, 55, 82);
     }
 </style>
