@@ -1,9 +1,9 @@
 <template>
-    <div class="addContent container">
+    <div class="addContent">
         <p>DODAJ MATERIAŁ</p>
         <p>Data dodania:{{ getTimestamp() }}</p>
         <div>
-            <form v-on:submit.prevent="addContent">
+            <form v-on:submit.prevent="addContent" class="md-card">
                 <div class="form-group">
                     <label for="title">Tytuł</label>
                     <input class="form-control" id="title" v-model="material.title" type="text" name="title"/>

@@ -41,19 +41,27 @@
           </md-card-content>
       </md-ripple>
     </md-card>
+    <div class="card-footer pb-0 pt-3">
+      <jw-pagination :pageSize=15 :items="materials" @changePage="onChangePage" :labels="customLabels"></jw-pagination>
+    </div>
   </div>
 </template>
-<!-- <p></p> -->
-<!-- <p>{{material.link}}</p> -->
-<!-- <p>{{material.email}}</p> -->
 
 <script>
+const customLabels = {
+    first: '<<',
+    last: '>>',
+    previous: '<',
+    next: '>',
+};
 export default {
     name: 'app',
     data() {
         return {
             selected: null,
             materials: [],
+            pageOfItems: [],
+            customLabels,
         };
     },
     async created() {
@@ -70,6 +78,9 @@ export default {
       }),
       onSelect(item) {
         this.selected = item;
+      },
+      onChangePage(pageOfItems) {
+        this.pageOfItems = pageOfItems;
       },
     },
 };
