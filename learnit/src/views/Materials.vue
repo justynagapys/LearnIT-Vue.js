@@ -9,7 +9,7 @@
             <md-table-cell md-label="KATEGORIA" md-sort-by="category" class="tableCell">{{ item.category }}</md-table-cell>
             <md-table-cell md-label="SŁOWA KLUCZE" md-sort-by="keyWords" class="tableCell">{{ item.keyWords }}</md-table-cell>
             <md-table-cell md-label="AUTOR" md-sort-by="author" class="tableCell">{{ item.author }}</md-table-cell>
-            <md-table-cell md-label="DATA" md-sort-by="date" class="tableCell">{{ item.date  | formatDate }}</md-table-cell>
+            <md-table-cell md-label="DATA DODANIA" md-sort-by="date" class="tableCell">{{ item.date  | formatDate }}</md-table-cell>
             <md-table-cell><img alt="edit" src="../assets/edit.svg" class="rowIcon"></md-table-cell>
             <md-table-cell><img alt="trash" src="../assets/trash.svg" class="rowIcon"></md-table-cell>
       </md-table-row>
@@ -79,8 +79,8 @@ export default {
         background-color:deepskyblue;
     }
     .selectedMaterial {
-      margin: 4px;
+      margin: 6px;
+      width: 80%;
       display: inline-block;
-      vertical-align: top;
     }
 </style>
