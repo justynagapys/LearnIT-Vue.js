@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar">
         <div class="number">
-            Liczba materiałów: 50
+            Liczba materiałów: {{countRows()}}
         </div>
         <div class="menu-items">
             <router-link to="/" active-class="active" tag="button" exact class="side-btn">
@@ -27,8 +27,29 @@
 </template>
 
 <script>
-export default {
+import $ from 'jquery';
 
+export default {
+    data() {
+        return {
+            materials: [],
+        };
+    },
+    methods: {
+        countRows() {
+            $.ajax({
+                url: 'https://localhost:44304/learn-it/materials/all',
+                method: 'get',
+            })
+            .done((result) => {
+                this.materials = result;
+            })
+            .fail((err) => {
+                console.log(err);
+            });
+            return this.materials.length;
+        },
+    },
 };
 </script>
 

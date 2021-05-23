@@ -19,6 +19,7 @@
     "moment": "^2.29.1",
     "popper.js": "^1.16.1",
     "simple-modal-vue": "^1.0.12",
+    "vee-validate": "^3.4.5",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
     "vue-material": "^1.0.0-beta-15",
