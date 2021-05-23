@@ -4,7 +4,7 @@
             <h1 class="md-title">Materiały</h1>
         </md-table-toolbar>
         <md-table v-model="materials" md-sort="id" md-sort-order="asc" md-card @md-selected="onSelect" class="mdTable">
-            <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single">
+            <md-table-row  slot="md-table-row" slot-scope="{ item }" md-selectable="single">
                 <md-table-cell md-label="NAZWA" md-sort-by="title" class="tableCell">{{ item.title }}</md-table-cell>
                 <md-table-cell md-label="KATEGORIA" md-sort-by="category" class="tableCell">{{ item.category }}</md-table-cell>
                 <md-table-cell md-label="SŁOWA KLUCZE" md-sort-by="keyWords" class="tableCell">{{ item.keyWords }}</md-table-cell>
@@ -29,7 +29,7 @@
                 <p class="pHeader">OPIS: </p>
                 <p>{{ selected.description }}</p>
                 <p class="pHeader">LINK: </p>
-                <p>{{ selected.link }}</p>
+                <p><button class="btn btn-primary" @click="openLink(selected.link)">ODNOŚNIK</button></p>
                 <p class="pHeader">AUTOR: </p>
                 <p>{{ selected.author }}</p>
                 <p class="pHeader">EMAIL: </p>
@@ -109,6 +109,9 @@ export default {
         },
         onChangePage(pageOfItems) {
             this.pageOfItems = pageOfItems;
+        },
+        openLink(link) {
+            window.open(link);
         },
         async deleteMaterial(id) {
             $.ajax({
