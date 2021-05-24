@@ -75,7 +75,7 @@
                     </div>
                     <br>
                     <div>
-                        <p style="padding-bottom:20px">Data dodania: {{ getTimestamp() }}</p>
+                        <p style="padding-bottom:20px">Data dodania: {{ timestamp }}</p>
                     </div>
                     <div>
                         <button :disabled="invalid" style="padding-bottom: 7px" id="add" class="btn btn-primary" type="submit" name="add">Dodaj</button>
@@ -132,6 +132,11 @@ export default {
             },
         };
     },
+    computed: {
+        timestamp() {
+            return new Date().toLocaleDateString();
+        },
+    },
     methods: {
         addContent() {
             $.ajax({
@@ -147,9 +152,6 @@ export default {
                 this.show.isError = true;
                 console.log(err);
             });
-        },
-        getTimestamp() {
-            return new Date().toLocaleDateString();
         },
         getDate() {
             const datet = new Date(Date.now());
@@ -191,7 +193,6 @@ export default {
         font-size: 20px;
         font-weight: 600;
     }
-
     .addContent ::selection {
         background-color:deepskyblue;
     }
