@@ -3,6 +3,9 @@
         <div class="titleText">
             <h4 class="text">Portal LearnIT został stworzony dla celów edukacyjnych, przeznaczony dla studentów Informatyki.</h4>
         </div>
+        <div>
+            <img src="../assets/education.jpg" width="780" height="200">
+        </div>
         <md-table-toolbar>
             <h5 class="md-title">Ostatnio dodane materiały:</h5>
         </md-table-toolbar>

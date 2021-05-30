@@ -21,8 +21,8 @@ export default {
     display: grid;
     grid-template-columns: 1fr 5fr;
     background-color: rgb(18, 55, 82);
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
   }
 
   .dashboard ::selection {
