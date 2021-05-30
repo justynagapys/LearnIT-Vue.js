@@ -83,7 +83,7 @@ export default {
 <style scoped>
     .home {
         padding: 5px;
-        height: 100%;
+        height: 100vh;
     }
     .md-title {
         text-transform: uppercase;

@@ -57,7 +57,7 @@
                          :rules="{required:true, regex: '[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZÓĄŚŁŻŹĆŃ \-]*[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ ]*'}"
                          :custom-messages="errorMessages.authorErrors" v-slot="{ errors }">
                         <div class="col r-col">
-                            <label for="author">Autor(ka)</label>
+                            <label for="author">Autor/-ka (imię i nazwisko)</label>
                             <input class="form-control" id="author" v-model="material.author" type="text" name="author"/>
                             <span class="error-span">{{ errors [0]}}</span>
                         </div>
@@ -213,11 +213,10 @@ export default {
         text-align: center;
         justify-content: center;
         align-items: center;
-        height: 100%;
+        height: 100vh;
         width: 100%;
         font-size: 20px;
         font-weight: 600;
-        margin-top:90px;
     }
 
     .addContent ::selection {
