@@ -1,11 +1,9 @@
 <template>
     <div class="home">
         <div class="titleText">
-            <h4 class="text">Portal LearnIT został stworzony dla celów edukacyjnych, przeznaczony dla studentów Informatyki.</h4>
+            <h4 class="text">Portal LearnIT został stworzony dla celów edukacyjnych. Jest on przeznaczony dla studentów Informatyki.</h4>
         </div>
-        <div>
-            <img src="../assets/education.jpg" width="780" height="200">
-        </div>
+        <div><img src="../assets/education.jpg" width="780" height="200"></div>
         <md-table-toolbar>
             <h5 class="md-title">Ostatnio dodane materiały:</h5>
         </md-table-toolbar>
@@ -15,7 +13,7 @@
                 <md-table-cell md-label="KATEGORIA" md-sort-by="category" class="tableCell">{{ item.category }}</md-table-cell>
                 <md-table-cell md-label="SŁOWA KLUCZE" md-sort-by="keyWords" class="tableCell">{{ item.keyWords }}</md-table-cell>
                 <md-table-cell md-label="AUTOR" md-sort-by="author" class="tableCell">{{ item.author }}</md-table-cell>
-                <md-table-cell md-label="DATA DODANIA" md-sort-by="date" class="tableCell">{{ item.date  | formatDate }}</md-table-cell>
+                <md-table-cell md-label="DATA DODANIA / MODYFIKACJI" md-sort-by="date" class="tableCell">{{ item.date  | formatDate }}</md-table-cell>
             </md-table-row>
         </md-table>
         <md-card md-with-hover v-if="selected">
@@ -83,7 +81,7 @@ export default {
 <style scoped>
     .home {
         padding: 5px;
-        height: 100vh;
+        height: 100%;
     }
     .md-title {
         text-transform: uppercase;
@@ -134,5 +132,6 @@ export default {
     }
     .titleText {
         padding-top: 20px;
+        padding-bottom: 20px;
     }
 </style>

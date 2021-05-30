@@ -14,7 +14,7 @@
                             <span class="error-span">{{ errors [0]}}</span>
                         </div>
                     </ValidationProvider>
-                    <ValidationProvider name="category" :rules="{required:true, max:50, regex: '[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ \-]*'}"
+                    <ValidationProvider name="category" :rules="{ required: true }"
                      :custom-messages="errorMessages.categoryErrors" v-slot="{ errors }">
                     <div class="form-group">
                         <label for="category">Kategoria</label>
@@ -29,7 +29,7 @@
                         <span class="error-span">{{ errors [0]}}</span>
                     </div>
                     </ValidationProvider>
-                    <ValidationProvider name="keywords" :rules="{required:true, max:100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ # , . \-]*$'}"
+                    <ValidationProvider name="keywords" :rules="{required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ # , . \-]*$'}"
                      :custom-messages="errorMessages.keyWordsErrors" v-slot="{ errors }">
                     <div class="form-group">
                         <label for="keywords">Słowa klucze</label>
@@ -45,7 +45,7 @@
                     </div>
                     </ValidationProvider>
                     <div class="row">
-                        <ValidationProvider class="col" name="link" :rules="{required:true, max:2000}"
+                        <ValidationProvider class="col" name="link" :rules="{required: true, max: 2000, regex: '^http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+$'}"
                          :custom-messages="errorMessages.linkErrors"  v-slot="{ errors }">
                         <div class="col l-col">
                             <label for="link">Link do materiału</label>
@@ -54,7 +54,7 @@
                         </div>
                         </ValidationProvider>
                         <ValidationProvider class="col"
-                         :rules="{required:true, regex: '[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZÓĄŚŁŻŹĆŃ \-]*[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ ]*'}"
+                         :rules="{required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃ]{1}[a-zęóąśłżźćń ]+[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćń \-]+[A-ZĘÓĄŚŁŻŹĆŃ]*[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ]*$'}"
                          :custom-messages="errorMessages.authorErrors" v-slot="{ errors }">
                         <div class="col r-col">
                             <label for="author">Autor/-ka (imię i nazwisko)</label>
@@ -66,7 +66,7 @@
                     <br>
                     <div class="row">
                         <ValidationProvider class="col" name="university"
-                         :rules="{required:true, max:100, regex: '[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ \-]*[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ ]*'}"
+                         :rules="{required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ \- . ,]*$'}"
                          :custom-messages="errorMessages.universityErrors" v-slot="{ errors }">
                         <div class="col l-col">
                             <label for="university">Uniwersytet</label>
@@ -74,7 +74,7 @@
                             <span class="error-span">{{ errors [0]}}</span>
                         </div>
                         </ValidationProvider>
-                        <ValidationProvider class="col" name="email" :rules="{required: true, max:320, email:true}" :custom-messages="errorMessages.emailErrors" v-slot="{ errors }">
+                        <ValidationProvider class="col" name="email" :rules="{required: true, max: 320, email: true}" :custom-messages="errorMessages.emailErrors" v-slot="{ errors }">
                         <div class="col r-col">
                             <label for="email">Adres email</label>
                             <input class="form-control" id="email" v-model="material.email" type="email" name="email"/>
@@ -84,10 +84,10 @@
                     </div>
                     <br>
                     <div>
-                        <p style="padding-bottom:20px">Data dodania: {{ getTimestamp() }}</p>
+                        <p style="padding-bottom:20px">Data dodania: {{ timestamp }}</p>
                     </div>
                     <div>
-                        <button :disabled="invalid" style="padding-bottom: 7px" @click="isShow = !isShow" id="add" class="btn btn-primary" type="submit" name="add">Dodaj</button>
+                        <button :disabled="invalid" @click="isShow = !isShow" id="add" class="btn btn-primary" type="submit" name="add">Dodaj</button>
                     </div>
                     <br>
                 </form>
@@ -96,7 +96,7 @@
         <simple-modal v-model="isShow" title="Dodano materiał">
             <template slot="body">
                 <h2>Sukces!</h2>
-                <p>Pomyślnie dodano materiał o nazwie: {{material.title}}</p>
+                <p>Pomyślnie dodano materiał o nazwie: {{material.title}}!</p>
                 <button class="btn btn-primary" @click="isShow = !isShow">Powrót</button>
             </template>
         </simple-modal>
@@ -126,44 +126,47 @@ export default {
                 titleErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 50',
-                    regex: 'Dozwolone są tylko litery, spacje, myślniki, kropki oraz cudzysłowy',
+                    regex: 'Dozwolone są tylko litery oraz znaki: -,"',
                 },
                 categoryErrors: {
                     required: 'To pole jest wymagane',
-                    max: 'Maksymalna ilość znaków: 50',
-                    regex: 'Dozwolone są tylko litery, spacje oraz myślniki',
                 },
                 keyWordsErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 100',
-                    regex: 'Dozwolone są tylko litery, spacje, myślniki, przecinki, kropki oraz #',
+                    regex: 'Dozwolone są tylko litery oraz znaki: -,.#',
+                },
+                descriptionErrors: {
+                    required: 'To pole jest wymagane',
                 },
                 linkErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 2000',
-                    regex: 'Niepoprawny format odnośnika',
+                    regex: 'Niepoprawny format odnośnika - musi rozpoczynać się od http(s)://',
                 },
                 authorErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 100',
-                    regex: 'Autor musi rozpoczynać się z wielkiej litery oraz może zawierać tylko litery i myślniki',
+                    regex: 'Autor musi rozpoczynać się z wielkiej litery oraz może zawierać tylko litery i opcjonalnie myślnik',
                 },
                 universityErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 100',
-                    regex: 'Uniwersytet musi rozpoczynać się z wielkiej litery oraz może zawierać tylko litery i myślniki',
+                    regex: 'Uniwersytet musi rozpoczynać się z wielkiej litery oraz może zawierać tylko litery i znaki: -,.',
                 },
                 emailErrors: {
                     required: 'To pole jest wymagane',
-                    email: 'Zły format maila',
+                    email: 'Zły format adresu email',
                     max: 'Maksymalna ilość znaków: 320',
                 },
-                required: 'To pole jest wymagane',
-                alpha: 'Dozwolone są tylko litery ',
-                email: 'Wpisz email w poprawnym formacie',
             },
             isShow: false,
         };
+    },
+    computed: {
+        timestamp() {
+            return new Date().toLocaleDateString();
+        },
     },
     methods: {
         addContent() {
@@ -174,9 +177,6 @@ export default {
             .catch((err) => {
                 console.log(err);
             });
-        },
-        getTimestamp() {
-            return new Date().toLocaleDateString();
         },
         getDate() {
             const datet = new Date(Date.now());
@@ -213,7 +213,7 @@ export default {
         text-align: center;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        height: 100%;
         width: 100%;
         font-size: 20px;
         font-weight: 600;

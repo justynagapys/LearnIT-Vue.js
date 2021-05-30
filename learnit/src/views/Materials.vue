@@ -1,5 +1,5 @@
 <template>
-    <div class="materials">
+     <div class="materials">
         <md-table-toolbar>
             <h1 class="md-title">Materiały</h1>
         </md-table-toolbar>
@@ -9,43 +9,43 @@
                 <md-table-cell md-label="KATEGORIA" md-sort-by="category" class="tableCell">{{ item.category }}</md-table-cell>
                 <md-table-cell md-label="SŁOWA KLUCZE" md-sort-by="keyWords" class="tableCell">{{ item.keyWords }}</md-table-cell>
                 <md-table-cell md-label="AUTOR" md-sort-by="author" class="tableCell">{{ item.author }}</md-table-cell>
-                <md-table-cell md-label="DATA DODANIA" md-sort-by="date" class="tableCell">{{ item.date  | formatDate }}</md-table-cell>
+                <md-table-cell md-label="DATA DODANIA / MODYFIKACJI" md-sort-by="date" class="tableCell">{{ item.date  | formatDate }}</md-table-cell>
             </md-table-row>
         </md-table>
-        <md-card md-with-hover v-if="selected">
-            <md-ripple  class="selectedMaterial">
-                <md-card-header>
-                    <a class="close" href="">&times;</a>
-                    <div class="md-title sTitle">{{ selected.title }} </div>
-                    <div class="md-subhead">
-                        DATA DODANIA: {{ selected.date | formatDate }}
-                    </div>
-                </md-card-header>
-                <md-card-content>
-                    <p class="pHeader">KATEGORIA:</p>
-                    <p>{{ selected.category }}</p>
-                    <p class="pHeader">SŁOWA KLUCZE: </p>
-                    <p>{{ selected.keyWords }}</p>
-                    <p class="pHeader">OPIS: </p>
-                    <p>{{ selected.description }}</p>
-                    <p><button class="btn btn-primary" @click="openLink(selected.link)">ODNOŚNIK</button></p>
-                    <p class="pHeader">AUTOR: </p>
-                    <p>{{ selected.author }}</p>
-                    <p class="pHeader">EMAIL: </p>
-                    <p>{{ selected.email }}</p>
-                    <p class="pHeader">UNIWERSYTET: </p>
-                    <p>{{ selected.university }}</p>
-                    <b-container>
-                        <b-row>
-                            <b-col id="col"><button @click="isShow1 =!isShow1"><img alt="edit" src="../assets/edit.svg" class="rowIcon"></button></b-col>
-                            <b-col id="col"><button @click="isShow = !isShow"><img alt="trash" src="../assets/trash.svg" class="rowIcon"></button></b-col>
-                        </b-row>
-                    </b-container>
-                </md-card-content>
-            </md-ripple>
-        </md-card>
-        <simple-modal v-model="isShow1" title="Edycja materiału">
-            <template slot="body">
+    <md-card md-with-hover v-if="selected">
+        <md-ripple  class="selectedMaterial">
+            <md-card-header>
+                <a class="close" href="">&times;</a>
+                <div class="md-title sTitle">{{ selected.title }} </div>
+                <div class="md-subhead">
+                    DATA DODANIA: {{ selected.date | formatDate }}
+                </div>
+            </md-card-header>
+            <md-card-content>
+                <p class="pHeader">KATEGORIA:</p>
+                <p>{{ selected.category }}</p>
+                <p class="pHeader">SŁOWA KLUCZE: </p>
+                <p>{{ selected.keyWords }}</p>
+                <p class="pHeader">OPIS: </p>
+                <p>{{ selected.description }}</p>
+                <p><button class="btn btn-primary" @click="openLink(selected.link)">ODNOŚNIK</button></p>
+                <p class="pHeader">AUTOR: </p>
+                <p>{{ selected.author }}</p>
+                <p class="pHeader">EMAIL: </p>
+                <p>{{ selected.email }}</p>
+                <p class="pHeader">UNIWERSYTET: </p>
+                <p>{{ selected.university }}</p>
+                <b-container>
+                <b-row>
+                    <b-col id="col"><button @click="isShow1 =!isShow1"><img alt="edit" src="../assets/edit.svg" class="rowIcon"></button></b-col>
+                    <b-col id="col"><button @click="isShow = !isShow"><img alt="trash" src="../assets/trash.svg" class="rowIcon"></button></b-col>
+                    </b-row>
+                </b-container>
+            </md-card-content>
+      </md-ripple>
+    </md-card>
+    <simple-modal v-model="isShow1">
+    <template slot="body">
         <h2>Edycja materiału</h2>
         <div>
             <ValidationObserver v-slot="{ invalid }" >
@@ -58,7 +58,7 @@
                     <span class="error-span">{{ errors [0]}}</span>
                 </div>
                 </ValidationProvider>
-                <ValidationProvider name="category" :rules="{required:true, max:50, regex: '[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ \-]*'}"
+                <ValidationProvider name="category" :rules="{ required: true }"
                  :custom-messages="errorMessages.categoryErrors" v-slot="{ errors }">
                 <div class="form-group">
                     <label for="category">Kategoria</label>
@@ -73,7 +73,7 @@
                     <span class="error-span">{{ errors [0]}}</span>
                 </div>
                 </ValidationProvider>
-                <ValidationProvider name="keywords" :rules="{required:true, max:100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ # , . \-]*$'}"
+                <ValidationProvider name="keywords" :rules="{ required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ # , . \-]*$'}"
                  :custom-messages="errorMessages.keyWordsErrors" v-slot="{ errors }">
                 <div class="form-group">
                     <label for="keywords">Słowa klucze</label>
@@ -88,7 +88,7 @@
                     <span class="error-span">{{ errors [0]}}</span>
                 </div>
                 </ValidationProvider>
-                <ValidationProvider name="link" :rules="{required:true, max:2000}"
+                <ValidationProvider name="link" :rules="{ required: true, max: 2000, regex: '^http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+$' }"
                  :custom-messages="errorMessages.linkErrors" v-slot="{ errors }">
                 <div class="form-group">
                     <label for="link">Link do materiału</label>
@@ -97,7 +97,7 @@
                 </div>
                 </ValidationProvider>
                 <ValidationProvider name="author"
-                 :rules="{required:true, regex: '[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZÓĄŚŁŻŹĆŃ \-]*[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ ]*'}"
+                 :rules="{required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃ]{1}[a-zęóąśłżźćń ]+[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćń \-]+[A-ZĘÓĄŚŁŻŹĆŃ]*[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ]*$'}"
                  :custom-messages="errorMessages.authorErrors" v-slot="{ errors }">
                 <div class="form-group">
                     <label for="author">Autor/-ka (imię i nazwisko)</label>
@@ -106,7 +106,7 @@
                 </div>
                 </ValidationProvider>
                 <ValidationProvider name="university"
-                 :rules="{required:true, max:100, regex: '[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ \-]*[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ ]*'}"
+                 :rules="{required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ \- . ,]*$'}"
                  :custom-messages="errorMessages.universityErrors" v-slot="{ errors }">
                 <div class="form-group">
                     <label for="university">Uniwersytet</label>
@@ -114,17 +114,10 @@
                     <span class="error-span">{{ errors [0]}}</span>
                 </div>
                 </ValidationProvider>
-                <ValidationProvider name="email" :rules="{required: true, max:320, email:true}" :custom-messages="errorMessages.emailErrors" v-slot="{ errors }">
+                <ValidationProvider name="email" :rules="{required: true, max: 320, email: true}" :custom-messages="errorMessages.emailErrors" v-slot="{ errors }">
                 <div class="form-group">
                     <label for="email">Adres email</label>
                     <input v-if="selected" class="form-control" id="email" v-model="editedMaterial.email" type="email" name="email"/>
-                    <span class="error-span">{{ errors [0]}}</span>
-                </div>
-                </ValidationProvider>
-                <ValidationProvider name="date" :rules="{required: true}" :custom-messages="errorMessages.dateErrors" v-slot="{ errors }">
-                <div class="form-group">
-                    <span>Data edycji:</span>
-                    <input v-if="selected" class="form-control" id="date" v-model="editedMaterial.date"/>
                     <span class="error-span">{{ errors [0]}}</span>
                 </div>
                 </ValidationProvider>
@@ -134,16 +127,16 @@
             </form>
             </ValidationObserver>
         </div>
-            </template>
-        </simple-modal>
-        <simple-modal v-model="isShow2" title="Edytowano materiał">
+    </template>
+    </simple-modal>
+    <simple-modal v-model="isShow2" title="Edytowano materiał">
             <template slot="body">
                 <h2>Sukces!</h2>
-                <p>Pomyślnie edytowano materiał</p>
+                <p>Pomyślnie edytowano materiał o tytule: {{this.editedMaterial.title}}!</p>
                 <button class="btn btn-primary" @click="reloadPage()">Powrót</button>
             </template>
         </simple-modal>
-        <simple-modal v-model="isShow" title="Usunięcie materiału">
+    <simple-modal v-model="isShow" title="Usunięcie materiału">
     <template slot="body">
         <h2>Czy na pewno chcesz usunąć materiał?</h2>
         <b-container>
@@ -153,25 +146,19 @@
             </b-row>
         </b-container>
     </template>
-        </simple-modal>
-        <simple-modal v-model="isDeleted" title="Usunięcie materiału">
-            <template slot="body">
-                <h2>Pomyślnie usunięto materiał</h2>
-                <b-col class="col"><button class="btn btn-primary" @click="reloadPage()">Powrót</button></b-col>
-            </template>
-        </simple-modal>
-    </div>
+    </simple-modal>
+    <simple-modal v-model="isDeleted" title="Usunięcie materiału">
+    <template slot="body">
+        <h2>Pomyślnie usunięto materiał!</h2>
+        <b-col class="col"><button class="btn btn-primary" @click="reloadPage()">Powrót</button></b-col>
+    </template>
+    </simple-modal>
+  </div>
 </template>
 
 <script>
 import SimpleModal from 'simple-modal-vue';
 
-const customLabels = {
-    first: '<<',
-    last: '>>',
-    previous: '<',
-    next: '>',
-};
 export default {
     name: 'app',
     components: { SimpleModal },
@@ -190,8 +177,6 @@ export default {
             },
             selected: null,
             materials: [],
-            pageOfItems: [],
-            customLabels,
             isDeleted: false,
             isShow: false,
             isShow1: false,
@@ -200,17 +185,15 @@ export default {
                 titleErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 50',
-                    regex: 'Dozwolone są tylko litery, spacje, myślniki, kropki oraz cudzysłowy',
+                    regex: 'Dozwolone są tylko litery oraz znaki: -,"',
                 },
                 categoryErrors: {
                     required: 'To pole jest wymagane',
-                    max: 'Maksymalna ilość znaków: 50',
-                    regex: 'Dozwolone są tylko litery, spacje oraz myślniki',
                 },
                 keyWordsErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 100',
-                    regex: 'Dozwolone są tylko litery, spacje, myślniki, przecinki, kropki oraz #',
+                    regex: 'Dozwolone są tylko litery oraz znaki: -,.#',
                 },
                 descriptionErrors: {
                     required: 'To pole jest wymagane',
@@ -218,24 +201,21 @@ export default {
                 linkErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 2000',
-                    regex: 'Niepoprawny format odnośnika',
-                },
-                dateErrors: {
-                    required: 'To pole jest wymagane',
+                    regex: 'Niepoprawny format odnośnika - musi rozpoczynać się od http(s)://',
                 },
                 authorErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 100',
-                    regex: 'Autor musi rozpoczynać się z wielkiej litery oraz może zawierać tylko litery i myślniki',
+                    regex: 'Autor musi rozpoczynać się z wielkiej litery oraz może zawierać tylko litery i opcjonalnie myślnik',
                 },
                 universityErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 100',
-                    regex: 'Uniwersytet musi rozpoczynać się z wielkiej litery oraz może zawierać tylko litery i myślniki',
+                    regex: 'Uniwersytet musi rozpoczynać się z wielkiej litery oraz może zawierać tylko litery i znaki: -,.',
                 },
                 emailErrors: {
                     required: 'To pole jest wymagane',
-                    email: 'Zły format maila',
+                    email: 'Zły format adresu email',
                     max: 'Maksymalna ilość znaków: 320',
                 },
             },
@@ -246,6 +226,9 @@ export default {
         this.$http.get(baseURI)
         .then((result) => {
             this.materials = result.data;
+        })
+        .catch((err) => {
+            console.log(err);
         });
     },
     methods: {
@@ -279,6 +262,9 @@ export default {
             .then((response) => {
                 this.isShow2 = !this.isShow2;
                 console.log(response);
+            })
+            .catch((err) => {
+                console.log(err);
             });
         },
         async reloadPage() {
