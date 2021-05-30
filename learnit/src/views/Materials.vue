@@ -2,8 +2,9 @@
      <div class="materials">
         <md-table-toolbar>
             <h1 class="md-title">Materiały</h1>
+            <input type="text" class="form-control searchInput" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Wyszukaj materiał po nazwie" v-model="searchText">
         </md-table-toolbar>
-        <md-table v-model="materials" md-sort="id" md-sort-order="asc" md-card @md-selected="onSelect" class="mdTable">
+        <md-table v-model="filteredMaterials" :md-sort.sync="currentSort" :md-sort-order.sync="currentSortOrder" :md-sort-fn="customSort" md-card @md-selected="onSelect" class="mdTable">
             <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single">
                 <md-table-cell md-label="NAZWA" md-sort-by="title" class="tableCell">{{ item.title }}</md-table-cell>
                 <md-table-cell md-label="KATEGORIA" md-sort-by="category" class="tableCell">{{ item.category }}</md-table-cell>
@@ -177,6 +178,9 @@ export default {
             },
             selected: null,
             materials: [],
+            searchText: '',
+            currentSort: 'id',
+            currentSortOrder: 'asc',
             isDeleted: false,
             isShow: false,
             isShow1: false,
@@ -232,6 +236,15 @@ export default {
         });
     },
     methods: {
+        customSort(value) {
+        return value.sort((a, b) => {
+          const sortBy = this.currentSort;
+          if (this.currentSortOrder === 'desc') {
+            return a[sortBy].localeCompare(b[sortBy]);
+          }
+          return b[sortBy].localeCompare(a[sortBy]);
+        });
+        },
         onSelect(item) {
             this.selected = item;
             this.editedMaterial.title = this.selected.title;
@@ -242,9 +255,6 @@ export default {
             this.editedMaterial.author = this.selected.author;
             this.editedMaterial.university = this.selected.university;
             this.editedMaterial.email = this.selected.email;
-        },
-        onChangePage(pageOfItems) {
-            this.pageOfItems = pageOfItems;
         },
         async deleteMaterial(id) {
             this.$http.delete(`https://localhost:44304/learn-it/materials/delete-material/${id}`)
@@ -279,6 +289,11 @@ export default {
             return dateISO;
         },
     },
+    computed: {
+        filteredMaterials() {
+            return this.materials.filter((item) => item.title.toLowerCase().includes(this.searchText.toLowerCase()));
+        },
+    },
 };
 </script>
 
@@ -301,7 +316,7 @@ export default {
         padding-right: 20%;
     }
     .materials {
-        padding: 5px;
+        padding: 20px;
         height: 100%;
     }
     .md-title {
@@ -350,6 +365,9 @@ export default {
       font-weight: bold;
       text-decoration: none;
       color: #333;
+    }
+    .searchInput{
+        margin: 10px;
     }
     #col {
         padding: 20px;
