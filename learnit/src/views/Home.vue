@@ -37,8 +37,7 @@
                         <p>{{ selected.keyWords }}</p>
                         <p class="pHeader">OPIS: </p>
                         <p>{{ selected.description }}</p>
-                        <p class="pHeader">LINK: </p>
-                        <p>{{ selected.link }}</p>
+                        <p><button class="btn btn-primary" @click="openLink(selected.link)">Przejdź do materiału</button></p>
                         <p class="pHeader">AUTOR/KA: </p>
                         <p>{{ selected.author }}</p>
                         <p class="pHeader">EMAIL: </p>
