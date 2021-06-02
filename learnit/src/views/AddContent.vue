@@ -3,9 +3,9 @@
         <md-table-toolbar>
             <h1 class="md-title">DODAJ MATERIAŁ</h1>
         </md-table-toolbar>
-        <div>
+        <div class="md-card">
             <ValidationObserver v-slot="{ invalid }" >
-                <form v-on:submit.prevent="addContent" class="md-card">
+                <form v-on:submit.prevent="addContent">
                     <ValidationProvider name="title" rules="required|max:50" :custom-messages="errorMessages.titleErrors" v-slot="{ errors }">
                         <div class="form-group" >
                             <label for="title">Tytuł</label>
@@ -221,5 +221,9 @@ export default {
 
     .addContent ::selection {
         background-color:deepskyblue;
+    }
+
+    .md-card{
+        margin: 20px;
     }
 </style>

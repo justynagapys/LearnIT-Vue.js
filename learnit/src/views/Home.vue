@@ -5,7 +5,7 @@
         </div>
         <div><img src="../assets/education.jpg" width="780" height="200"></div>
         <md-table-toolbar>
-            <h5 class="md-title">Ostatnio dodane materiały:</h5>
+            <h5 class="md-title h5Title">Ostatnio dodane materiały:</h5>
         </md-table-toolbar>
         <md-table v-model="materials" md-card @md-selected="onSelect" class="mdTable">
             <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single">
@@ -98,10 +98,6 @@ export default {
       font-size: 15px;
       font-weight: 600;
     }
-    .md-title {
-        text-transform: uppercase;
-        font-weight: 600;
-    }
     .home ::selection {
         background-color:deepskyblue;
     }
@@ -133,5 +129,11 @@ export default {
     .titleText {
         padding-top: 20px;
         padding-bottom: 20px;
+    }
+    .mdTable{
+        margin: 20px;
+    }
+    .h5Title{
+        padding-top: 20px;
     }
 </style>
