@@ -113,7 +113,7 @@ export default {
         background-color:deepskyblue;
     }
      .selectedMaterial {
-      margin: 10px auto;
+      margin: 60px auto;
       padding: 10px;
       background: #fff;
       border-radius: 5px;
