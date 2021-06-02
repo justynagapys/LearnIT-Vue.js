@@ -3,7 +3,11 @@
         <div class="titleText">
             <h4 class="text">Portal LearnIT został stworzony dla celów edukacyjnych. Jest on przeznaczony dla studentów Informatyki.</h4>
         </div>
-        <div><img src="../assets/education.jpg" width="780" height="200"></div>
+        <div>
+            <transition>
+                <img class="animate__animated animate__fadeInDown" width="780" height="200" src="../assets/education.jpg" />
+            </transition>
+        </div>
         <md-table-toolbar>
             <h5 class="md-title h5Title">Ostatnio dodane materiały:</h5>
         </md-table-toolbar>
@@ -50,6 +54,7 @@
 
 <script>
 import $ from 'jquery';
+import 'animate.css';
 
 export default {
     data() {

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ocrv/vue-tailwind-pagination": "^0.0.4",
+    "animate.css": "^4.1.1",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
     "core-js": "^3.6.5",
