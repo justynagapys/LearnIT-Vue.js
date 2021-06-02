@@ -271,6 +271,9 @@ export default {
             this.editedMaterial.university = this.selected.university;
             this.editedMaterial.email = this.selected.email;
         },
+        openLink(link) {
+            window.open(link);
+        },
         async deleteMaterial(id) {
             $.ajax({
                 url: `https://localhost:44304/learn-it/materials/delete-material/${id}`,

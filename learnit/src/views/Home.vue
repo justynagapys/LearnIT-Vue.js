@@ -62,6 +62,7 @@ export default {
             materials: [],
         };
     },
+
     async created() {
         $.ajax({
             url: 'https://localhost:44304/learn-it/materials/all',
@@ -79,6 +80,9 @@ export default {
     methods: {
         onSelect(item) {
             this.selected = item;
+        },
+        openLink(link) {
+            window.open(link);
         },
     },
 };
