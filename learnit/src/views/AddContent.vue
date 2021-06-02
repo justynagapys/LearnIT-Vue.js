@@ -3,14 +3,14 @@
         <md-table-toolbar>
             <h1 class="md-title">DODAJ MATERIAŁ</h1>
         </md-table-toolbar>
-        <div class="md-card">
+        <div>
             <ValidationObserver v-slot="{ invalid }" >
-                <form v-on:submit.prevent="addContent">
+                <form v-on:submit.prevent="addContent" class="md-card">
                     <ValidationProvider name="title" rules="required|max:50" :custom-messages="errorMessages.titleErrors" v-slot="{ errors }">
                         <div class="form-group" >
                             <label for="title">Tytuł</label>
                             <input class="form-control" id="title" v-model="material.title"
-                             pattern="^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ , ' \- &quot;]*$" type="text" name="title" width="50%"/>
+                             pattern="^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ0-9 , . ' \- &quot;]*$" type="text" name="title" width="50%"/>
                             <span class="error-span">{{ errors [0]}}</span>
                         </div>
                     </ValidationProvider>
@@ -57,7 +57,7 @@
                          :rules="{required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃ]{1}[a-zęóąśłżźćń ]+[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćń \-]+[A-ZĘÓĄŚŁŻŹĆŃ]*[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ]*$'}"
                          :custom-messages="errorMessages.authorErrors" v-slot="{ errors }">
                         <div class="col r-col">
-                            <label for="author">Autor/-ka (imię i nazwisko)</label>
+                            <label for="author">Autor/ka (imię i nazwisko)</label>
                             <input class="form-control" id="author" v-model="material.author" type="text" name="author"/>
                             <span class="error-span">{{ errors [0]}}</span>
                         </div>
@@ -87,17 +87,24 @@
                         <p style="padding-bottom:20px">Data dodania: {{ timestamp }}</p>
                     </div>
                     <div>
-                        <button :disabled="invalid" @click="isShow = !isShow" id="add" class="btn btn-primary" type="submit" name="add">Dodaj</button>
+                        <button :disabled="invalid" style="padding-bottom: 7px" @click="isShow = !isShow" id="add" class="btn btn-primary" type="submit" name="add">Dodaj</button>
                     </div>
                     <br>
                 </form>
             </ValidationObserver>
         </div>
-        <simple-modal v-model="isShow" title="Dodano materiał">
+        <simple-modal v-model="show.isShow" v-show="show.isShow" title="Dodano materiał">
             <template slot="body">
                 <h2>Sukces!</h2>
-                <p>Pomyślnie dodano materiał o nazwie: {{material.title}}!</p>
-                <button class="btn btn-primary" @click="isShow = !isShow">Powrót</button>
+                <p>Pomyślnie dodano materiał o nazwie: {{material.title}}</p>
+                <button class="btn btn-primary" @click="show.isShow = !show.isShow">Powrót</button>
+            </template>
+        </simple-modal>
+        <simple-modal v-model="show.isError" v-show="show.isError" title="Błąd">
+            <template slot="body">
+                <h2>Błąd!</h2>
+                <p>Materiał o podanym tytule/odnośniku już istnieje!</p>
+                <button class="btn btn-primary" @click="show.isError = !show.isError">Powrót</button>
             </template>
         </simple-modal>
     </div>
@@ -105,6 +112,7 @@
 
 <script>
 import SimpleModal from 'simple-modal-vue';
+import $ from 'jquery';
 
 export default {
     name: 'PostContent',
@@ -126,7 +134,7 @@ export default {
                 titleErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 50',
-                    regex: 'Dozwolone są tylko litery oraz znaki: -,"',
+                    regex: 'Dozwolone są tylko litery, cyfry i znaki: -,."',
                 },
                 categoryErrors: {
                     required: 'To pole jest wymagane',
@@ -160,7 +168,10 @@ export default {
                     max: 'Maksymalna ilość znaków: 320',
                 },
             },
-            isShow: false,
+            show: {
+                isShow: false,
+                isError: false,
+            },
         };
     },
     computed: {
@@ -170,11 +181,17 @@ export default {
     },
     methods: {
         addContent() {
-            this.$http.post('https://localhost:44304/learn-it/materials/add-material', this.material)
-            .then((response) => {
-                console.log(response);
+            $.ajax({
+                url: 'https://localhost:44304/learn-it/materials/add-material',
+                method: 'post',
+                data: this.material,
             })
-            .catch((err) => {
+            .done((result) => {
+                this.show.isShow = true;
+                console.log(result);
+            })
+            .fail((err) => {
+                this.show.isError = true;
                 console.log(err);
             });
         },
@@ -209,11 +226,10 @@ export default {
         text-transform: uppercase;
         font-weight: 600;
     }
-    .addContent{
+    .addContent {
         text-align: center;
         justify-content: center;
         align-items: center;
-        height: 100%;
         width: 100%;
         font-size: 20px;
         font-weight: 600;
@@ -221,6 +237,9 @@ export default {
 
     .addContent ::selection {
         background-color:deepskyblue;
+    }
+    #add {
+        width:200px;
     }
 
     .md-card{

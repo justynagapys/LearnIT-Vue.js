@@ -12,37 +12,39 @@
                 <md-table-cell md-label="NAZWA" md-sort-by="title" class="tableCell">{{ item.title }}</md-table-cell>
                 <md-table-cell md-label="KATEGORIA" md-sort-by="category" class="tableCell">{{ item.category }}</md-table-cell>
                 <md-table-cell md-label="SŁOWA KLUCZE" md-sort-by="keyWords" class="tableCell">{{ item.keyWords }}</md-table-cell>
-                <md-table-cell md-label="AUTOR" md-sort-by="author" class="tableCell">{{ item.author }}</md-table-cell>
+                <md-table-cell md-label="AUTOR/KA" md-sort-by="author" class="tableCell">{{ item.author }}</md-table-cell>
                 <md-table-cell md-label="DATA DODANIA / MODYFIKACJI" md-sort-by="date" class="tableCell">{{ item.date  | formatDate }}</md-table-cell>
             </md-table-row>
         </md-table>
-        <md-card md-with-hover v-if="selected">
-            <md-ripple class="selectedMaterial">
-                <md-card-header>
-                    <a class="close" href="">&times;</a>
-                    <div class="md-title sTitle">{{ selected.title }} </div>
-                    <div class="md-subhead">
-                        DATA DODANIA: {{ selected.date | formatDate }}
-                    </div>
-                </md-card-header>
-                <md-card-content>
-                    <p class="pHeader">KATEGORIA:</p>
-                    <p>{{ selected.category }}</p>
-                    <p class="pHeader">SŁOWA KLUCZE: </p>
-                    <p>{{ selected.keyWords }}</p>
-                    <p class="pHeader">OPIS: </p>
-                    <p>{{ selected.description }}</p>
-                    <p class="pHeader">LINK: </p>
-                    <p>{{ selected.link }}</p>
-                    <p class="pHeader">AUTOR: </p>
-                    <p>{{ selected.author }}</p>
-                    <p class="pHeader">EMAIL: </p>
-                    <p>{{ selected.email }}</p>
-                    <p class="pHeader">UNIWERSYTET: </p>
-                    <p>{{ selected.university }}</p>
-                </md-card-content>
-            </md-ripple>
-        </md-card>
+        <transition name="fade">
+            <md-card md-with-hover v-if="selected">
+                <md-ripple class="selectedMaterial">
+                    <md-card-header>
+                        <a class="close" href="">&times;</a>
+                        <div class="md-title sTitle">{{ selected.title }} </div>
+                        <div class="md-subhead">
+                            DATA DODANIA: {{ selected.date | formatDate }}
+                        </div>
+                    </md-card-header>
+                    <md-card-content>
+                        <p class="pHeader">KATEGORIA:</p>
+                        <p>{{ selected.category }}</p>
+                        <p class="pHeader">SŁOWA KLUCZE: </p>
+                        <p>{{ selected.keyWords }}</p>
+                        <p class="pHeader">OPIS: </p>
+                        <p>{{ selected.description }}</p>
+                        <p class="pHeader">LINK: </p>
+                        <p>{{ selected.link }}</p>
+                        <p class="pHeader">AUTOR/KA: </p>
+                        <p>{{ selected.author }}</p>
+                        <p class="pHeader">EMAIL: </p>
+                        <p>{{ selected.email }}</p>
+                        <p class="pHeader">UNIWERSYTET: </p>
+                        <p>{{ selected.university }}</p>
+                    </md-card-content>
+                </md-ripple>
+            </md-card>
+        </transition>
     </div>
 </template>
 
@@ -98,6 +100,10 @@ export default {
       font-size: 15px;
       font-weight: 600;
     }
+    .md-title {
+        text-transform: uppercase;
+        font-weight: 600;
+    }
     .home ::selection {
         background-color:deepskyblue;
     }
@@ -135,5 +141,11 @@ export default {
     }
     .h5Title{
         padding-top: 20px;
+    }
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
     }
 </style>
