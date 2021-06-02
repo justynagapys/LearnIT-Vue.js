@@ -340,7 +340,7 @@ export default {
     }
     .materials {
         padding: 20px;
-        height: 100%;
+        min-height: 99vh;
     }
     .md-title {
         text-transform: uppercase;

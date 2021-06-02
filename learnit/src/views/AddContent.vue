@@ -230,6 +230,7 @@ export default {
         text-align: center;
         justify-content: center;
         align-items: center;
+        min-height: 99vh;
         width: 100%;
         font-size: 20px;
         font-weight: 600;
