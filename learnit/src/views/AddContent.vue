@@ -93,20 +93,24 @@
                 </form>
             </ValidationObserver>
         </div>
-        <simple-modal v-model="show.isShow" v-show="show.isShow" title="Dodano materiał">
-            <template slot="body">
-                <h2>Sukces!</h2>
-                <p>Pomyślnie dodano materiał o nazwie: {{material.title}}</p>
-                <button class="btn btn-primary" @click="show.isShow = !show.isShow">Powrót</button>
-            </template>
-        </simple-modal>
-        <simple-modal v-model="show.isError" v-show="show.isError" title="Błąd">
-            <template slot="body">
-                <h2>Błąd!</h2>
-                <p>Materiał o podanym tytule/odnośniku już istnieje!</p>
-                <button class="btn btn-primary" @click="show.isError = !show.isError">Powrót</button>
-            </template>
-        </simple-modal>
+        <transition>
+            <simple-modal class="animate__animated animate__fadeIn" v-model="show.isShow" v-show="show.isShow" title="Dodano materiał">
+                <template slot="body">
+                    <h2>Sukces!</h2>
+                    <p>Pomyślnie dodano materiał o tytule: {{material.title}}</p>
+                    <button class="btn btn-primary" @click="show.isShow =! show.isShow">Powrót</button>
+                </template>
+            </simple-modal>
+        </transition>
+        <transition>
+            <simple-modal class="animate__animated animate__fadeIn" v-model="show.isError" v-show="show.isError" title="Błąd">
+                <template slot="body">
+                    <h2>Błąd!</h2>
+                    <p>Materiał o podanym tytule/odnośniku już istnieje!</p>
+                    <button class="btn btn-primary" @click="show.isError = !show.isError">Powrót</button>
+                </template>
+            </simple-modal>
+        </transition>
     </div>
 </template>
 
@@ -242,8 +246,7 @@ export default {
     #add {
         width:200px;
     }
-
-    .md-card{
+    .md-card {
         margin: 20px;
     }
 </style>

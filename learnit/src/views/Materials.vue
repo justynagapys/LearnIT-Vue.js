@@ -13,8 +13,8 @@
                 <md-table-cell md-label="DATA DODANIA / MODYFIKACJI" md-sort-by="date" class="tableCell">{{ item.date  | formatDate }}</md-table-cell>
             </md-table-row>
         </md-table>
-        <transition name="fade">
-            <md-card md-with-hover v-if="selected">
+        <transition>
+            <md-card class="animate__animated animate__fadeIn" md-with-hover v-if="selected">
                 <md-ripple  class="selectedMaterial">
                     <md-card-header>
                         <a class="close" href="">&times;</a>
@@ -47,122 +47,132 @@
                 </md-ripple>
             </md-card>
         </transition>
-        <simple-modal v-model="show.isShow1">
-        <template slot="body">
-            <h2>Edycja materiału</h2>
-            <div>
-                <ValidationObserver v-slot="{ invalid }" >
-                <form v-on:submit.prevent="editMaterial">
-                    <ValidationProvider name="title" rules="required|max:50" :custom-messages="errorMessages.titleErrors" v-slot="{ errors }">
-                    <div class="form-group">
-                        <span>Tytuł</span>
-                        <input v-if="selected" class="form-control" id="title" v-model="editedMaterial.title" type="text"
-                        pattern="^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ0-9 , . ' \- &quot;]*$" name="title" width="50%"/>
-                        <span class="error-span">{{ errors [0]}}</span>
+        <transition>
+            <simple-modal class="animate__animated animate__fadeIn" v-model="show.isShow1">
+                <template slot="body">
+                    <h2>Edycja materiału</h2>
+                    <div>
+                        <ValidationObserver v-slot="{ invalid }" >
+                        <form v-on:submit.prevent="editMaterial">
+                            <ValidationProvider name="title" rules="required|max:50" :custom-messages="errorMessages.titleErrors" v-slot="{ errors }">
+                            <div class="form-group">
+                                <span>Tytuł</span>
+                                <input v-if="selected" class="form-control" id="title" v-model="editedMaterial.title" type="text"
+                                pattern="^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ0-9 , . ' \- &quot;]*$" name="title" width="50%"/>
+                                <span class="error-span">{{ errors [0]}}</span>
+                            </div>
+                            </ValidationProvider>
+                            <ValidationProvider name="category" :rules="{ required: true }"
+                            :custom-messages="errorMessages.categoryErrors" v-slot="{ errors }">
+                            <div class="form-group">
+                                <label for="category">Kategoria</label>
+                                <select v-if="selected" v-model="editedMaterial.category" class="form-select" aria-label="Default select example">
+                                    <option id="analysis" name="analysis" value="Analiza danych">Analiza danych</option>
+                                    <option id="programming" name="programming" value="Programowanie">Programowanie</option>
+                                    <option id="network" name="network" value="Sieci">Sieci</option>
+                                    <option id="testing" name="testing" value="Testowanie">Testowanie</option>
+                                    <option id="operating_systems" name="operating_systems" value="Systemy operacyjne">Systemy operacyjne</option>
+                                    <option id="other" name="other" value="Inne">Inne</option>
+                                </select>
+                                <span class="error-span">{{ errors [0]}}</span>
+                            </div>
+                            </ValidationProvider>
+                            <ValidationProvider name="keywords" :rules="{ required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ # , . \-]*$'}"
+                            :custom-messages="errorMessages.keyWordsErrors" v-slot="{ errors }">
+                            <div class="form-group">
+                                <label for="keywords">Słowa klucze</label>
+                                <textarea v-if="selected" class="form-control" id="keywords" v-model="editedMaterial.keyWords" name="keywords" rows="2" cols="30"></textarea>
+                                <span class="error-span">{{ errors [0]}}</span>
+                            </div>
+                            </ValidationProvider>
+                            <ValidationProvider name="description" rules="required" :custom-messages="errorMessages.descriptionErrors" v-slot="{ errors }">
+                            <div class="form-group">
+                                <label for="description">Opis</label>
+                                <textarea v-if="selected" class="form-control" id="description" v-model="editedMaterial.description" name="description" rows="4" cols="50"></textarea>
+                                <span class="error-span">{{ errors [0]}}</span>
+                            </div>
+                            </ValidationProvider>
+                            <ValidationProvider name="link" :rules="{ required: true, max: 2000, regex: '^http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+$' }"
+                            :custom-messages="errorMessages.linkErrors" v-slot="{ errors }">
+                            <div class="form-group">
+                                <label for="link">Link do materiału</label>
+                                <input v-if="selected" class="form-control" id="link" v-model="editedMaterial.link" type="text" name="link"/>
+                                <span class="error-span">{{ errors [0]}}</span>
+                            </div>
+                            </ValidationProvider>
+                            <ValidationProvider name="author"
+                            :rules="{required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃ]{1}[a-zęóąśłżźćń ]+[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćń \-]+[A-ZĘÓĄŚŁŻŹĆŃ]*[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ]*$'}"
+                            :custom-messages="errorMessages.authorErrors" v-slot="{ errors }">
+                            <div class="form-group">
+                                <label for="author">Autor/ka (imię i nazwisko)</label>
+                                <input v-if="selected" class="form-control" id="author" v-model="editedMaterial.author" type="text" name="author"/>
+                                <span class="error-span">{{ errors [0]}}</span>
+                            </div>
+                            </ValidationProvider>
+                            <ValidationProvider name="university"
+                            :rules="{required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ \- . ,]*$'}"
+                            :custom-messages="errorMessages.universityErrors" v-slot="{ errors }">
+                            <div class="form-group">
+                                <label for="university">Uniwersytet</label>
+                                <input v-if="selected" class="form-control" id="university" v-model="editedMaterial.university" type="text" name="university"/>
+                                <span class="error-span">{{ errors [0]}}</span>
+                            </div>
+                            </ValidationProvider>
+                            <ValidationProvider name="email" :rules="{required: true, max: 320, email: true}" :custom-messages="errorMessages.emailErrors" v-slot="{ errors }">
+                            <div class="form-group">
+                                <label for="email">Adres email</label>
+                                <input v-if="selected" class="form-control" id="email" v-model="editedMaterial.email" type="email" name="email"/>
+                                <span class="error-span">{{ errors [0]}}</span>
+                            </div>
+                            </ValidationProvider>
+                            <div class="form-group">
+                                <button :disabled="invalid" style="padding-bottom: 7px" id="edit" @click="isShow1 = !isShow1" class="btn btn-primary" name="edit">Edytuj</button>
+                            </div>
+                        </form>
+                        </ValidationObserver>
                     </div>
-                    </ValidationProvider>
-                    <ValidationProvider name="category" :rules="{ required: true }"
-                    :custom-messages="errorMessages.categoryErrors" v-slot="{ errors }">
-                    <div class="form-group">
-                        <label for="category">Kategoria</label>
-                        <select v-if="selected" v-model="editedMaterial.category" class="form-select" aria-label="Default select example">
-                            <option id="analysis" name="analysis" value="Analiza danych">Analiza danych</option>
-                            <option id="programming" name="programming" value="Programowanie">Programowanie</option>
-                            <option id="network" name="network" value="Sieci">Sieci</option>
-                            <option id="testing" name="testing" value="Testowanie">Testowanie</option>
-                            <option id="operating_systems" name="operating_systems" value="Systemy operacyjne">Systemy operacyjne</option>
-                            <option id="other" name="other" value="Inne">Inne</option>
-                        </select>
-                        <span class="error-span">{{ errors [0]}}</span>
-                    </div>
-                    </ValidationProvider>
-                    <ValidationProvider name="keywords" :rules="{ required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ # , . \-]*$'}"
-                    :custom-messages="errorMessages.keyWordsErrors" v-slot="{ errors }">
-                    <div class="form-group">
-                        <label for="keywords">Słowa klucze</label>
-                        <textarea v-if="selected" class="form-control" id="keywords" v-model="editedMaterial.keyWords" name="keywords" rows="2" cols="30"></textarea>
-                        <span class="error-span">{{ errors [0]}}</span>
-                    </div>
-                    </ValidationProvider>
-                    <ValidationProvider name="description" rules="required" :custom-messages="errorMessages.descriptionErrors" v-slot="{ errors }">
-                    <div class="form-group">
-                        <label for="description">Opis</label>
-                        <textarea v-if="selected" class="form-control" id="description" v-model="editedMaterial.description" name="description" rows="4" cols="50"></textarea>
-                        <span class="error-span">{{ errors [0]}}</span>
-                    </div>
-                    </ValidationProvider>
-                    <ValidationProvider name="link" :rules="{ required: true, max: 2000, regex: '^http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+$' }"
-                    :custom-messages="errorMessages.linkErrors" v-slot="{ errors }">
-                    <div class="form-group">
-                        <label for="link">Link do materiału</label>
-                        <input v-if="selected" class="form-control" id="link" v-model="editedMaterial.link" type="text" name="link"/>
-                        <span class="error-span">{{ errors [0]}}</span>
-                    </div>
-                    </ValidationProvider>
-                    <ValidationProvider name="author"
-                    :rules="{required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃ]{1}[a-zęóąśłżźćń ]+[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćń \-]+[A-ZĘÓĄŚŁŻŹĆŃ]*[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ]*$'}"
-                    :custom-messages="errorMessages.authorErrors" v-slot="{ errors }">
-                    <div class="form-group">
-                        <label for="author">Autor/ka (imię i nazwisko)</label>
-                        <input v-if="selected" class="form-control" id="author" v-model="editedMaterial.author" type="text" name="author"/>
-                        <span class="error-span">{{ errors [0]}}</span>
-                    </div>
-                    </ValidationProvider>
-                    <ValidationProvider name="university"
-                    :rules="{required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃ]+[a-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ \- . ,]*$'}"
-                    :custom-messages="errorMessages.universityErrors" v-slot="{ errors }">
-                    <div class="form-group">
-                        <label for="university">Uniwersytet</label>
-                        <input v-if="selected" class="form-control" id="university" v-model="editedMaterial.university" type="text" name="university"/>
-                        <span class="error-span">{{ errors [0]}}</span>
-                    </div>
-                    </ValidationProvider>
-                    <ValidationProvider name="email" :rules="{required: true, max: 320, email: true}" :custom-messages="errorMessages.emailErrors" v-slot="{ errors }">
-                    <div class="form-group">
-                        <label for="email">Adres email</label>
-                        <input v-if="selected" class="form-control" id="email" v-model="editedMaterial.email" type="email" name="email"/>
-                        <span class="error-span">{{ errors [0]}}</span>
-                    </div>
-                    </ValidationProvider>
-                    <div class="form-group">
-                        <button :disabled="invalid" style="padding-bottom: 7px" id="edit" @click="isShow1 = !isShow1" class="btn btn-primary" name="edit">Edytuj</button>
-                    </div>
-                </form>
-                </ValidationObserver>
-            </div>
-        </template>
-        </simple-modal>
-        <simple-modal v-model="show.isShow2" v-show="show.isShow2" title="Edytowano materiał">
-            <template slot="body">
-                <h2>Sukces!</h2>
-                <p>Pomyślnie edytowano materiał o tytule: {{this.editedMaterial.title}}</p>
-                <button class="btn btn-primary" @click="reloadPage()">Powrót</button>
-            </template>
-        </simple-modal>
-        <simple-modal v-model="show.isError" v-show="show.isError" title="Błąd">
-            <template slot="body">
-                <h2>Błąd!</h2>
-                <p>Materiał o podanym tytule/odnośniku już istnieje!</p>
-                <button class="btn btn-primary" @click="show.isError = !show.isError">Powrót</button>
-            </template>
-        </simple-modal>
-        <simple-modal v-model="show.isShow" title="Usunięcie materiału">
-        <template slot="body">
-            <h2>Czy na pewno chcesz usunąć materiał?</h2>
-            <b-container>
-                <b-row>
-                    <b-col id="col"><button class="btn btn-primary" @click="show.isShow = !show.isShow">Nie</button></b-col>
-                    <b-col id="col"><button class="btn btn-primary" @click="deleteMaterial(selected.id)">Tak</button></b-col>
-                </b-row>
-            </b-container>
-        </template>
-        </simple-modal>
-        <simple-modal v-model="isDeleted" title="Usunięcie materiału">
-        <template slot="body">
-            <h2>Pomyślnie usunięto materiał!</h2>
-            <b-col class="col"><button class="btn btn-primary" @click="reloadPage()">Powrót</button></b-col>
-        </template>
-        </simple-modal>
+                </template>
+            </simple-modal>
+        </transition>
+        <transition>
+            <simple-modal class="animate__animated animate__fadeIn" v-model="show.isShow2" v-show="show.isShow2" title="Edytowano materiał">
+                <template slot="body">
+                    <h2>Sukces!</h2>
+                    <p>Pomyślnie edytowano materiał o tytule: {{this.editedMaterial.title}}</p>
+                    <button class="btn btn-primary" @click="reloadPage()">Powrót</button>
+                </template>
+            </simple-modal>
+        </transition>
+        <transition>
+            <simple-modal class="animate__animated animate__fadeIn" v-model="show.isError" v-show="show.isError" title="Błąd">
+                <template slot="body">
+                    <h2>Błąd!</h2>
+                    <p>Materiał o podanym tytule/odnośniku już istnieje!</p>
+                    <button class="btn btn-primary" @click="show.isError = !show.isError">Powrót</button>
+                </template>
+            </simple-modal>
+        </transition>
+        <transition>
+            <simple-modal class="animate__animated animate__fadeIn" v-model="show.isShow" title="Usunięcie materiału">
+                <template slot="body">
+                    <h4>Czy na pewno chcesz usunąć materiał?</h4>
+                    <b-container>
+                        <b-row>
+                            <b-col id="col"><button class="btn btn-primary" @click="show.isShow = !show.isShow">Nie</button></b-col>
+                            <b-col id="col"><button class="btn btn-primary" @click="deleteMaterial(selected.id)">Tak</button></b-col>
+                        </b-row>
+                    </b-container>
+                </template>
+            </simple-modal>
+        </transition>
+        <transition>
+            <simple-modal class="animate__animated animate__fadeIn" v-model="isDeleted" title="Usunięcie materiału">
+                <template slot="body">
+                    <h4>Pomyślnie usunięto materiał!</h4>
+                    <b-col class="col"><button class="btn btn-primary" @click="reloadPage()">Powrót</button></b-col>
+                </template>
+            </simple-modal>
+        </transition>
   </div>
 </template>
 
@@ -317,7 +327,8 @@ export default {
     },
     computed: {
         filteredMaterials() {
-            return this.materials.filter((item) => item.title.toLowerCase().includes(this.searchText.toLowerCase()));
+            return this.materials.filter((item) => item.title
+                .toLowerCase().includes(this.searchText.toLowerCase()));
         },
     },
 };

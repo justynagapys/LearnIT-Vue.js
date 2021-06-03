@@ -3,11 +3,9 @@
         <div class="titleText">
             <h4 class="text">Portal LearnIT został stworzony dla celów edukacyjnych. Jest on przeznaczony dla studentów Informatyki.</h4>
         </div>
-        <div>
-            <transition>
-                <img class="animate__animated animate__fadeInDown" width="780" height="200" src="../assets/education.jpg" />
-            </transition>
-        </div>
+        <transition>
+            <img class="animate__animated animate__fadeInDown" width="780" height="200" src="../assets/education.jpg" />
+        </transition>
         <md-table-toolbar>
             <h5 class="md-title h5Title">Ostatnio dodane materiały:</h5>
         </md-table-toolbar>
@@ -20,8 +18,8 @@
                 <md-table-cell md-label="DATA DODANIA / MODYFIKACJI" md-sort-by="date" class="tableCell">{{ item.date  | formatDate }}</md-table-cell>
             </md-table-row>
         </md-table>
-        <transition name="fade">
-            <md-card md-with-hover v-if="selected">
+        <transition>
+            <md-card class="animate__animated animate__fadeIn" md-with-hover v-if="selected">
                 <md-ripple class="selectedMaterial">
                     <md-card-header>
                         <a class="close" href="">&times;</a>
@@ -37,7 +35,7 @@
                         <p>{{ selected.keyWords }}</p>
                         <p class="pHeader">OPIS: </p>
                         <p>{{ selected.description }}</p>
-                        <p><button class="btn btn-primary" @click="openLink(selected.link)">Przejdź do materiału</button></p>
+                         <p><button class="btn btn-primary" @click="openLink(selected.link)">Przejdź do materiału</button></p>
                         <p class="pHeader">AUTOR/KA: </p>
                         <p>{{ selected.author }}</p>
                         <p class="pHeader">EMAIL: </p>
@@ -62,7 +60,6 @@ export default {
             materials: [],
         };
     },
-
     async created() {
         $.ajax({
             url: 'https://localhost:44304/learn-it/materials/all',
@@ -90,7 +87,7 @@ export default {
 
 <style scoped>
     .home {
-        padding: 5px;
+        padding: 20px;
         min-height: 99vh;
     }
     .md-title {
@@ -115,34 +112,34 @@ export default {
     .home ::selection {
         background-color:deepskyblue;
     }
-     .selectedMaterial {
-      margin: 60px auto;
-      padding: 10px;
-      background: #fff;
-      border-radius: 5px;
-      width: 60%;
-      position: fixed;
-      top: 45px;
-      bottom: 40px;
-      left: 280px;
-      right: 0;
-      height: auto;
-      border: rgb(18, 55, 82) solid;
-      overflow: auto;
+    .selectedMaterial {
+        margin: 60px auto;
+        padding: 10px;
+        background: #fff;
+        border-radius: 5px;
+        width: 60%;
+        position: fixed;
+        top: 45px;
+        bottom: 40px;
+        left: 280px;
+        right: 0;
+        height: auto;
+        border: rgb(18, 55, 82) solid;
+        overflow: auto;
     }
     .selectedMaterial .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      transition: all 200ms;
-      font-size: 30px;
-      font-weight: bold;
-      text-decoration: none;
-      color: #333;
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        transition: all 200ms;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
     }
     .titleText {
         padding-top: 20px;
-        padding-bottom: 20px;
+      padding-bottom: 20px;
     }
     .mdTable{
         margin: 20px;

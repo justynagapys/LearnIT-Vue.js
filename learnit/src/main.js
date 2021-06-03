@@ -24,4 +24,4 @@ new Vue({
   render: (h) => h(App),
 }).$mount('#app');
 
-Vue.filter('formatDate', (value) => moment(String(value)).format('MM/DD/YYYY'));
+Vue.filter('formatDate', (value) => moment(String(value)).format('DD/MM/YYYY'));
