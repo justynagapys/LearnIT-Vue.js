@@ -57,8 +57,7 @@
                             <ValidationProvider name="title" rules="required|max:50" :custom-messages="errorMessages.titleErrors" v-slot="{ errors }">
                             <div class="form-group">
                                 <span>Tytuł</span>
-                                <input v-if="selected" class="form-control" id="title" v-model="editedMaterial.title" type="text"
-                                pattern="^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ0-9 , . ' \- &quot;]*$" name="title" width="50%"/>
+                                <input v-if="selected" class="form-control" id="title" v-model="editedMaterial.title" type="text" name="title" width="50%"/>
                                 <span class="error-span">{{ errors [0]}}</span>
                             </div>
                             </ValidationProvider>
@@ -77,7 +76,7 @@
                                 <span class="error-span">{{ errors [0]}}</span>
                             </div>
                             </ValidationProvider>
-                            <ValidationProvider name="keywords" :rules="{ required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ # , . \-]*$'}"
+                            <ValidationProvider name="keywords" :rules="{ required: true, max: 100, regex: '^[A-ZĘÓĄŚŁŻŹĆŃa-zęóąśłżźćńA-ZĘÓĄŚŁŻŹĆŃ # , . + \-]*$'}"
                             :custom-messages="errorMessages.keyWordsErrors" v-slot="{ errors }">
                             <div class="form-group">
                                 <label for="keywords">Słowa klucze</label>
@@ -212,7 +211,6 @@ export default {
                 titleErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 50',
-                    regex: 'Dozwolone są tylko litery, cyfry i znaki: -,."',
                 },
                 categoryErrors: {
                     required: 'To pole jest wymagane',
@@ -220,7 +218,7 @@ export default {
                 keyWordsErrors: {
                     required: 'To pole jest wymagane',
                     max: 'Maksymalna ilość znaków: 100',
-                    regex: 'Dozwolone są tylko litery oraz znaki: -,.#',
+                    regex: 'Dozwolone są tylko litery oraz znaki: -,.#+',
                 },
                 descriptionErrors: {
                     required: 'To pole jest wymagane',

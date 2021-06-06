@@ -6,10 +6,10 @@
         <transition>
             <img class="animate__animated animate__fadeInDown" width="780" height="200" src="../assets/education.jpg" />
         </transition>
-        <md-table-toolbar>
-            <h5 class="md-title h5Title">Ostatnio dodane materiały:</h5>
-        </md-table-toolbar>
         <md-table v-model="materials" md-card @md-selected="onSelect" class="mdTable">
+            <md-table-toolbar>
+                <h5 class="md-title h5Title">Ostatnio dodane materiały:</h5>
+            </md-table-toolbar>
             <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single">
                 <md-table-cell md-label="NAZWA" md-sort-by="title" class="tableCell">{{ item.title }}</md-table-cell>
                 <md-table-cell md-label="KATEGORIA" md-sort-by="category" class="tableCell">{{ item.category }}</md-table-cell>
@@ -152,5 +152,8 @@ export default {
     }
     .fade-enter, .fade-leave-to {
         opacity: 0;
+    }
+    img {
+        margin: 10px;
     }
 </style>
