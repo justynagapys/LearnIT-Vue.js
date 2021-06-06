@@ -105,10 +105,6 @@ export default {
       font-size: 15px;
       font-weight: 600;
     }
-    .md-title {
-        text-transform: uppercase;
-        font-weight: 600;
-    }
     .home ::selection {
         background-color:deepskyblue;
     }
@@ -146,12 +142,6 @@ export default {
     }
     .h5Title{
         padding-top: 20px;
-    }
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
-    }
-    .fade-enter, .fade-leave-to {
-        opacity: 0;
     }
     img {
         margin: 10px;

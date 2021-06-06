@@ -2,8 +2,12 @@
     <div class="materials">
        <md-table-toolbar>
             <h1 class="md-title">Materiały</h1>
-            <input type="text" class="form-control searchInput" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Wyszukaj materiał po nazwie" v-model="searchText">
         </md-table-toolbar>
+        <div>
+            <input type="text" class="form-control searchInput" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Wyszukaj materiał" v-model="searchText">
+            <md-radio v-model="radio" value="title" class="md-primary radioButton">Tytuł</md-radio>
+            <md-radio v-model="radio" value="keyWords" class="md-primary radioButton">Słowo klucz</md-radio>
+        </div>
         <md-table v-model="filteredMaterials" :md-sort.sync="currentSort" :md-sort-order.sync="currentSortOrder" :md-sort-fn="customSort" md-card @md-selected="onSelect" class="mdTable">
             <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="single">
                 <md-table-cell md-label="NAZWA" md-sort-by="title" class="tableCell">{{ item.title }}</md-table-cell>
@@ -200,6 +204,7 @@ export default {
             searchText: '',
             currentSort: 'id',
             currentSortOrder: 'asc',
+            radio: 'title',
             isDeleted: false,
             show: {
                 isShow: false,
@@ -325,8 +330,15 @@ export default {
     },
     computed: {
         filteredMaterials() {
-            return this.materials.filter((item) => item.title
+            let result = '';
+            if (this.radio === 'title') {
+                result = this.materials.filter((item) => item.title
                 .toLowerCase().includes(this.searchText.toLowerCase()));
+            } else if (this.radio === 'keyWords') {
+                result = this.materials.filter((item) => item.keyWords
+                .toLowerCase().includes(this.searchText.toLowerCase()));
+            }
+            return result;
         },
     },
 };
@@ -403,15 +415,15 @@ export default {
     }
     .searchInput {
         margin: 10px;
+        width: 450px;
+        display: inline;
+    }
+    .radioButton {
+        padding-left: 15px;
+        margin: 10px;
     }
     #col {
         padding: 20px;
-    }
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
-    }
-    .fade-enter, .fade-leave-to {
-        opacity: 0;
     }
     #edit {
         width:200px;
