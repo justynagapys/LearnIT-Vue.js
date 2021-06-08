@@ -36,7 +36,7 @@
                         <span class="error-span">{{ errors [0]}}</span>
                     </div>
                     </ValidationProvider>
-                    <ValidationProvider name="description" rules="required" :custom-messages="errorMessages" v-slot="{ errors }">
+                    <ValidationProvider name="description" rules="required" :custom-messages="errorMessages.descriptionErrors" v-slot="{ errors }">
                     <div class="form-group">
                         <label for="description">Opis</label>
                         <textarea class="form-control" id="description" v-model="material.description" name="description" rows="4" cols="50"></textarea>
@@ -97,7 +97,7 @@
                 <template slot="body">
                     <h2>Sukces!</h2>
                     <p>Pomyślnie dodano materiał o tytule: {{material.title}}</p>
-                    <button class="btn btn-primary" @click="show.isShow =! show.isShow">Powrót</button>
+                    <button class="btn btn-primary" @click="reloadPage()">OK</button>
                 </template>
             </simple-modal>
         </transition>
@@ -196,6 +196,9 @@ export default {
                 this.show.isError = true;
                 console.log(err);
             });
+        },
+        async reloadPage() {
+            this.$router.go();
         },
         getDate() {
             const datet = new Date(Date.now());
