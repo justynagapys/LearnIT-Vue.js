@@ -227,6 +227,7 @@ export default {
     .md-title {
         text-transform: uppercase;
         font-weight: 600;
+        padding-top: 30px;
     }
     .addContent {
         text-align: center;

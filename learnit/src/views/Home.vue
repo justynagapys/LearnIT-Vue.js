@@ -22,7 +22,7 @@
             <md-card class="animate__animated animate__fadeIn" md-with-hover v-if="selected">
                 <md-ripple class="selectedMaterial">
                     <md-card-header>
-                        <a class="close" href="">&times;</a>
+                        <button id="close" class="close" data-dismiss="modal" @click="close()">x</button>
                         <div class="md-title sTitle">{{ selected.title }} </div>
                         <div class="md-subhead">
                             DATA DODANIA: {{ selected.date | formatDate }}
@@ -81,6 +81,9 @@ export default {
         openLink(link) {
             window.open(link);
         },
+        close() {
+            this.selected = false;
+        },
     },
 };
 </script>
@@ -125,13 +128,15 @@ export default {
     }
     .selectedMaterial .close {
         position: absolute;
-        top: 20px;
+        top: 15px;
         right: 30px;
         transition: all 200ms;
         font-size: 30px;
         font-weight: bold;
         text-decoration: none;
         color: #333;
+        border: none;
+        background-color: white;
     }
     .titleText {
         padding-top: 20px;
