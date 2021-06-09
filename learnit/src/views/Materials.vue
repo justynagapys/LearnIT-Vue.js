@@ -52,7 +52,7 @@
             </md-card>
         </transition>
         <transition>
-            <simple-modal class="animate__animated animate__fadeIn" v-model="show.isShow1">
+            <simple-modal class="animate__animated animate__fadeIn editTemplate" v-model="show.isShow1">
                 <template slot="body">
                     <h2>Edycja materiału</h2>
                     <div>
@@ -436,5 +436,8 @@ export default {
     }
     #edit {
         width:200px;
+    }
+    .editTemplate{
+        padding-top:70px;
     }
 </style>
