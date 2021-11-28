@@ -1,5 +1,5 @@
 # LearnIT-Vue.js
-## Front-end of the LearnIT application in Vue.js made for the purpose of completing the classes at the university
+Front-end of the LearnIT application in Vue.js made for the purpose of completing the classes at the university
 
 Project have been written using **Visual Studio Code**.
 
